@@ -7,6 +7,12 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  --color-black: #282828;
+  --color-grey: #97938e;
+  --color-blue: #bee2fd;
+  --color-green: #acdbc5;
+  --color-cream: #fceacc;
+  --color-beige: #fff5ed;
 }
 
 .logo {

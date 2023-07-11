@@ -3,7 +3,9 @@ import Colors from '../constants/colors';
 
 const UserAvatar = ({ size, name, imageUrl, job }) => {
   return (
-    <div className={`flex flex-col items-center justify-center bg-[#fceacc]`}>
+    <div
+      className={`flex flex-col items-center justify-center bg-[#fceacc] pt-4`}
+    >
       <Avatar size={size} src={imageUrl} alt={name} />
       <p className={`text-xl mt-4 font-bold text-[${Colors.BLACK}]`}>
         {name.charAt(0).toUpperCase() + name.substr(1)}

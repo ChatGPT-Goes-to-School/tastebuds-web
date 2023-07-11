@@ -20,3 +20,7 @@
 .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
   background: var(--color-beige);
 }
+
+.ant-layout-sider-children {
+  width: 100%;
+}

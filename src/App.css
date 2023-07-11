@@ -12,3 +12,11 @@
   --color-cream: #fceacc;
   --color-beige: #fff5ed;
 }
+
+.ant-menu {
+  background: var(--color-cream);
+}
+
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+  background: var(--color-beige);
+}

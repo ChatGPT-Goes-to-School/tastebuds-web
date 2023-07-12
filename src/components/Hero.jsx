@@ -3,7 +3,7 @@ import { ReactComponent as BackgroundSvg } from '../assets/barbecue.svg';
 
 const HeroSection = () => {
   return (
-    <div className="bg-[#d7f3e6] border rounded-xl  m-8 mt-4 h-[200px] flex items-center justify-center">
+    <div className="bg-[#d7f3e6] border rounded-xl mx-8 my-4 h-[200px] flex items-center justify-center">
       <div className="flex items-center justify-center w-1/4 h-[200px]">
         <BackgroundSvg className="svg-bg" />
       </div>

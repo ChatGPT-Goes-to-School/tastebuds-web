@@ -24,3 +24,10 @@
 .ant-layout-sider-children {
   width: 100%;
 }
+
+:where(.css-dev-only-do-not-override-14wwjjs).ant-btn-default:not(
+    :disabled
+  ):not(.ant-btn-disabled):hover {
+  color: #fceacc;
+  border-color: #fceacc;
+}

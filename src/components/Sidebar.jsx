@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Layout, Menu } from 'antd';
 import {
   HomeOutlined,
@@ -15,7 +15,18 @@ import Logout from './Logout';
 
 const Sidebar = () => {
   const [selected, setSelected] = React.useState('/');
+  const [user, setUser] = React.useState('');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    let name = localStorage.getItem('user');
+    if (name === null) {
+      // navigate('/login');
+      localStorage.setItem('user', 'John Doe');
+      name = 'John Doe';
+    }
+    setUser(name);
+  }, []);
   return (
     <Layout
       hasSider
@@ -24,7 +35,7 @@ const Sidebar = () => {
       <Sider className="h-screen w-full flex justify-center fixed left-0 top-0 bottom-0 items-center">
         <div className="w-full flex flex-col h-screen bg-[#fceacc]">
           <UserAvatar
-            name="John Doe"
+            name={user}
             size={128}
             imageUrl="https://scontent.fsin3-1.fna.fbcdn.net/v/t31.18172-8/15732054_1829744933948321_6912147507579640372_o.png?_nc_cat=103&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=oeNbB7sKxMwAX-oWQIB&_nc_ht=scontent.fsin3-1.fna&oh=00_AfB1Aep5dYFEHkV_ZSyj5d5c9uW06oxPC6ddyg1SQLG8_g&oe=64D4A13B"
             job="Software Engineer"

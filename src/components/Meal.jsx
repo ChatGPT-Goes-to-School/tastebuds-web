@@ -1,15 +1,6 @@
 import { Button, Image } from 'antd';
-import { useState } from 'react';
 
-const Meal = ({ title }) => {
-  const [meals, setMeals] = useState([
-    {
-      name: 'Egg',
-      calories: 100,
-      image:
-        'https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2018/03/How-to-Boil-Eggs-main-1-2.jpg',
-    },
-  ]);
+const Meal = ({ title, canAdd, meals }) => {
   return (
     <div className="flex flex-col">
       <p>{title}</p>
@@ -20,9 +11,11 @@ const Meal = ({ title }) => {
           <p>{meal.calories} cal</p>
         </div>
       ))}
-      <Button type="dashed" className="mt-4 mb-4">
-        Add a Meal
-      </Button>
+      {canAdd && (
+        <Button type="dashed" className="mt-4 mb-4">
+          Add a Meal
+        </Button>
+      )}
     </div>
   );
 };

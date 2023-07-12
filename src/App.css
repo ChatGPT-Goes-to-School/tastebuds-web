@@ -31,3 +31,7 @@
   color: #fceacc;
   border-color: #fceacc;
 }
+
+.svg-bg {
+  transform: scale(0.3);
+}

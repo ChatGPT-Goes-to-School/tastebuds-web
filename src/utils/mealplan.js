@@ -1,10 +1,11 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: '${MEALPLAN_URL}', // Replace with your API's base URL
+  baseURL: import.meta.env.VITE_MEALPLAN_URL, // Replace with your API's base URL
 });
 
 const getMealPlanById = async (id) => {
+  console.log('heelo', import.meta.env.MEALPLAN_URL);
   const response = await instance.get(`/mealplan/${id}`);
   return response.data;
 };

@@ -8,8 +8,8 @@ const SearchBar = ({}) => {
 
   const selectBefore = (
     <Select defaultValue={type} onChange={(e) => setType(e.target.value)}>
-      <Option value="Recipe">Recipe</Option>
-      <Option value="Chef">Chef</Option>
+      <Select.Option value="Recipe">Recipe</Select.Option>
+      <Select.Option value="Chef">Chef</Select.Option>
     </Select>
   );
 

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'http://13.214.31.239:8080/api', // Replace with your API's base URL
+  baseURL: '${MEALPLAN_URL}', // Replace with your API's base URL
 });
 
 const getMealPlanById = async (id) => {
@@ -11,6 +11,13 @@ const getMealPlanById = async (id) => {
 
 const getMealPlanByUsername = async (username) => {
   const response = await instance.get(`/mealplan/username/${username}`);
+  return response.data;
+};
+
+const getMealPlanByUsernameAndDate = async (username, date) => {
+  const response = await instance.get(
+    `/mealplan/username/${username}/datePlan/${date}`
+  );
   return response.data;
 };
 
@@ -32,6 +39,7 @@ const deleteMealPlan = async (id) => {
 export {
   getMealPlanById,
   getMealPlanByUsername,
+  getMealPlanByUsernameAndDate,
   createMealPlan,
   updateMealPlan,
   deleteMealPlan,

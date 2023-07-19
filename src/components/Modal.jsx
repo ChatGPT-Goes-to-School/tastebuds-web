@@ -21,7 +21,6 @@ const Modals = ({ type, meal, updateMeal }) => {
   };
 
   const handleCancel = () => {
-    console.log('Clicked cancel button');
     setOpen(false);
   };
 
@@ -69,7 +68,6 @@ const Modals = ({ type, meal, updateMeal }) => {
           type: 'success',
           content: 'Meal plan updated',
         });
-        console.log(dayjs().format('YYYY-MM-DDTHH:mm:ss.007Z'));
 
         handleOk();
       } catch (error) {
@@ -80,7 +78,6 @@ const Modals = ({ type, meal, updateMeal }) => {
       }
     } else {
       try {
-        console.log(dayjs().format('YYYY-MM-DDTHH:mm:ss.007Z'));
         let mealPlan = {
           Name: 'Hi',
           Description: 'Stuff happens',
@@ -103,7 +100,6 @@ const Modals = ({ type, meal, updateMeal }) => {
           type: 'success',
           content: 'Meal plan created',
         });
-        console.log(created);
         updateMeal(created);
         handleOk();
       } catch (error) {
@@ -111,7 +107,6 @@ const Modals = ({ type, meal, updateMeal }) => {
           type: 'error',
           content: 'Error creating meal plan',
         });
-        console.log(error);
       }
     }
   };

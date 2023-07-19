@@ -16,7 +16,7 @@ const Meal = ({ title, canAdd, meals, updateMeal, canSelect, meal }) => {
   }, [meals]);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col self-start">
       <p>{title}</p>
       {mealPlan.map((m, index) => {
         return <Recipe key={index} meal={m} />;

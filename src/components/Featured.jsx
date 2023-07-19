@@ -13,7 +13,8 @@ const Featured = () => {
   const [chosenPlan, setChosenPlan] = useState({});
 
   const getChosenPlan = async (name, date) => {
-    setChosenPlan(await getMealPlanByUsernameAndDate(name, date));
+    const plan = await getMealPlanByUsernameAndDate(name, date);
+    setChosenPlan(plan);
   };
 
   useEffect(() => {
@@ -22,11 +23,12 @@ const Featured = () => {
 
   const getTodayPlan = async (name, date) => {
     const plan = await getMealPlanByUsernameAndDate(name, date);
-    console.log(plan);
     setTodayPlan(plan);
   };
 
   useEffect(() => {
+    getChosenPlan('franky', currentDate.format('YYYY-MM-DD'));
+
     getTodayPlan('franky', dayjs().format('YYYY-MM-DD'));
   }, []);
 
@@ -122,19 +124,25 @@ const Featured = () => {
         <DatePicker
           defaultValue={currentDate}
           format={'DD/MM/YYYY'}
-          onChange={(date) => setCurrentDate(date)}
+          onChange={(date) => {
+            if (date !== null) setCurrentDate(date);
+          }}
           className="ml-8"
         />
         <div className="mt-8 flex items-center justify-evenly w-full">
-          {Object.entries(chosenMeals).map(([id, meal]) => (
-            <Meal
-              key={id}
-              title={id.charAt(0).toUpperCase() + id.substring(1)}
-              canAdd={false}
-              meals={meal}
-              canSelect={false}
-            />
-          ))}
+          {Object.entries(chosenMeals).map((id, meal) => {
+            return (
+              <Meal
+                key={id}
+                title={id[0].charAt(0).toUpperCase() + id[0].slice(1)}
+                canAdd={false}
+                meals={chosenMeals}
+                meal={chosenPlan}
+                updateMeal={setChosenPlan}
+                canSelect={false}
+              />
+            );
+          })}
         </div>
         <div className="flex items-center justify-center mt-8">
           <Progress

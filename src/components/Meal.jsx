@@ -1,21 +1,16 @@
 import { Button, Image } from 'antd';
+import Modal from './Modal';
+import Recipe from './Recipe';
 
-const Meal = ({ title, canAdd, meals }) => {
+const Meal = ({ title, canAdd, meals, updateMeal }) => {
   return (
     <div className="flex flex-col">
       <p>{title}</p>
       {meals.map((meal, index) => (
-        <div key={index} className="flex gap-4">
-          <Image src={meal.image} width={80} />
-          <p>{meal.name}</p>
-          <p>{meal.calories} cal</p>
-        </div>
+        <Recipe key={index} meal={meal} />
       ))}
-      {canAdd && (
-        <Button type="dashed" className="mt-4 mb-4">
-          Add a Meal
-        </Button>
-      )}
+      {canAdd && <Modal type={title} meal={meals} updateMeal={updateMeal} />}
+      {canSelect && <Button type="dashed">Select</Button>}
     </div>
   );
 };

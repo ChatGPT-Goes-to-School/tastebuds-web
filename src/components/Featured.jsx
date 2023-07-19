@@ -6,15 +6,6 @@ import { getMealPlanByUsernameAndDate } from '../utils/mealplan';
 import { getRecipeById, searchRecipe } from '../utils/meal';
 
 const Featured = () => {
-  const [meals, setMeals] = useState([
-    {
-      name: 'Egg',
-      calories: 100,
-      image:
-        'https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2018/03/How-to-Boil-Eggs-main-1-2.jpg',
-    },
-  ]);
-
   const [currentDate, setCurrentDate] = useState(dayjs());
   const [todayMeals, setTodayMeals] = useState({}); // [breakfast, lunch, dinner, snack]
   const [todayPlan, setTodayPlan] = useState({});
@@ -98,7 +89,8 @@ const Featured = () => {
               key={id}
               title={id.charAt(0).toUpperCase() + id.substring(1)}
               canAdd={true}
-              meals={meal}
+              meals={todayMeals}
+              updateMeal={setTodayMeals}
             />
           ))}
         </div>

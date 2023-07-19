@@ -4,9 +4,9 @@ import SearchBar from './Searchbar';
 import { createMealPlan, updateMealPlan } from '../utils/mealplan';
 import { searchRecipe } from '../utils/meal';
 import Recipe from './Recipe';
-import { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 
-const Modal = ({ type, meal, updateMeal }) => {
+const Modals = ({ type, meal, updateMeal }) => {
   const [messageApi, contextHolder] = message.useMessage();
 
   const [open, setOpen] = useState(false);
@@ -30,40 +30,48 @@ const Modal = ({ type, meal, updateMeal }) => {
   };
 
   const selectRecipe = async (recipe) => {
-    if (meal.id) {
+    if (meal.ID != 0) {
       try {
         if (type === 'Breakfast') {
-          if (meal.Breakfast) {
-            meal.Breakfast += `,${recipe.id}`;
+          if (meal.breakfast) {
+            meal.breakfast += `,${recipe.id}`;
           } else {
-            meal.Breakfast = recipe.id;
+            meal.breakfast = recipe.id;
           }
         } else if (type === 'Lunch') {
-          if (meal.Lunch) {
-            meal.Lunch += `,${recipe.id}`;
+          if (meal.lunch) {
+            meal.lunch += `,${recipe.id}`;
           } else {
-            meal.Lunch = recipe.id;
+            meal.lunch = recipe.id;
           }
         } else if (type === 'Dinner') {
-          if (meal.Dinner) {
-            meal.Dinner += `,${recipe.id}`;
+          if (meal.dinner) {
+            meal.dinner += `,${recipe.id}`;
           } else {
-            meal.Dinner = recipe.id;
+            meal.dinner = recipe.id;
           }
         } else if (type === 'Snack') {
-          if (meal.Snack) {
-            meal.Snack += `,${recipe.id}`;
+          if (meal.snack) {
+            meal.snack += `,${recipe.id}`;
           } else {
-            meal.Snack = recipe.id;
+            meal.snack = recipe.id;
           }
         }
 
-        const updatedMealPlan = await updateMealPlan(meal.id, recipe);
+        const updatedMealPlan = await updateMealPlan(meal.ID, {
+          breakfast: meal.breakfast,
+          lunch: meal.lunch,
+          dinner: meal.dinner,
+          snack: meal.snack,
+        });
         updateMeal(updatedMealPlan);
         messageApi.open({
           type: 'success',
           content: 'Meal plan updated',
         });
+        console.log(dayjs().format('YYYY-MM-DDTHH:mm:ss.007Z'));
+
+        handleOk();
       } catch (error) {
         messageApi.open({
           type: 'error',
@@ -72,33 +80,38 @@ const Modal = ({ type, meal, updateMeal }) => {
       }
     } else {
       try {
+        console.log(dayjs().format('YYYY-MM-DDTHH:mm:ss.007Z'));
         let mealPlan = {
           Name: 'Hi',
           Description: 'Stuff happens',
           Duration: 4,
-          Breakfast: '',
-          Lunch: '',
-          Dinner: '',
-          Snack: '',
+          breakfast: '',
+          lunch: '',
+          dinner: '',
+          snack: '',
           Username: 'franky',
-          Date: Dayjs().format('YYYY-MM-DD'),
+          date: dayjs().format('YYYY-MM-DDTHH:mm:ss.007').toString() + 'Z',
+          //2023-07-18 16:00:00.007
         };
-        if (type === 'Breakfast') mealPlan.Breakfast = recipe.id;
-        else if (type === 'Lunch') mealPlan.Lunch = recipe.id;
-        else if (type === 'Dinner') mealPlan.Dinner = recipe.id;
-        else if (type === 'Snack') mealPlan.Snack = recipe.id;
+        if (type === 'Breakfast') mealPlan.breakfast = recipe.id;
+        else if (type === 'Lunch') mealPlan.lunch = recipe.id;
+        else if (type === 'Dinner') mealPlan.dinner = recipe.id;
+        else if (type === 'Snack') mealPlan.snack = recipe.id;
 
         const created = await createMealPlan(mealPlan);
-        updateMeal(created);
         messageApi.open({
           type: 'success',
           content: 'Meal plan created',
         });
+        console.log(created);
+        updateMeal(created);
+        handleOk();
       } catch (error) {
         messageApi.open({
           type: 'error',
           content: 'Error creating meal plan',
         });
+        console.log(error);
       }
     }
   };
@@ -110,14 +123,16 @@ const Modal = ({ type, meal, updateMeal }) => {
       </Button>
       <Modal title={type} open={open} onOk={handleOk} onCancel={handleCancel}>
         <SearchBar submitFn={handleSubmit} />
-        {recipes.map((recipe, index) => (
-          <div className="flex items-center justify-center">
-            <Recipe key={index} meal={recipe} />
-            <Button title="Select" onClick={() => selectRecipe(recipe)} />
-          </div>
-        ))}
+        <div className="flex flex-col items-center justify-center gap-4 mt-4">
+          {recipes.map((recipe, index) => (
+            <div key={index} className="flex items-center justify-center gap-4">
+              <Recipe key={index} meal={recipe} />
+              <Button onClick={() => selectRecipe(recipe)}>Select</Button>
+            </div>
+          ))}
+        </div>
       </Modal>
     </>
   );
 };
-export default Modal;
+export default Modals;

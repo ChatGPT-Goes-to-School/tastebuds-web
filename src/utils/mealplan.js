@@ -5,35 +5,34 @@ const instance = axios.create({
 });
 
 const getMealPlanById = async (id) => {
-  console.log('heelo', import.meta.env.MEALPLAN_URL);
-  const response = await instance.get(`/mealplan/${id}`);
+  const response = await instance.get(`/meal-plans/${id}`);
   return response.data;
 };
 
 const getMealPlanByUsername = async (username) => {
-  const response = await instance.get(`/mealplan/username/${username}`);
+  const response = await instance.get(`/meal-plans/username/${username}`);
   return response.data;
 };
 
 const getMealPlanByUsernameAndDate = async (username, date) => {
   const response = await instance.get(
-    `/mealplan/username/${username}/datePlan/${date}`
+    `/meal-plans/username/${username}/datePlan/${date}`
   );
   return response.data;
 };
 
 const createMealPlan = async (mealPlan) => {
-  const response = await instance.post('/mealplan', mealPlan);
+  const response = await instance.post('/meal-plans', mealPlan);
   return response.data;
 };
 
 const updateMealPlan = async (id, mealPlan) => {
-  const response = await instance.put(`/mealplan/${id}`, mealPlan);
+  const response = await instance.put(`/meal-plans/${id}`, mealPlan);
   return response.data;
 };
 
 const deleteMealPlan = async (id) => {
-  const response = await instance.delete(`/mealplan/${id}`);
+  const response = await instance.delete(`/meal-plans/${id}`);
   return response.data;
 };
 

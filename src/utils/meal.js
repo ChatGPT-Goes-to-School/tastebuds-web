@@ -5,7 +5,7 @@ const instance = axios.create({
 });
 
 const searchRecipe = async (query) => {
-  const response = await instance.get(`recipe?keyword=${query}`);
+  const response = await instance.get(`recipe/search?keyword=${query}`);
   return response.data;
 };
 

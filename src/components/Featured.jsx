@@ -21,7 +21,9 @@ const Featured = () => {
   }, [currentDate]);
 
   const getTodayPlan = async (name, date) => {
-    setTodayPlan(await getMealPlanByUsernameAndDate(name, date));
+    const plan = await getMealPlanByUsernameAndDate(name, date);
+    console.log(plan);
+    setTodayPlan(plan);
   };
 
   useEffect(() => {
@@ -29,53 +31,62 @@ const Featured = () => {
   }, []);
 
   const extractMeal = async (meals, arr) => {
+    if (typeof meals !== 'string') return [];
     const mealIds = meals.split(',');
     for (let i = 0; i < mealIds.length; i++) {
       const recipe = await getRecipeById(mealIds[i]);
       arr.push(recipe);
     }
+    return arr;
+  };
+
+  const initChosenPlan = async () => {
+    let breakfast = [];
+    let lunch = [];
+    let dinner = [];
+    let snack = [];
+
+    if (chosenPlan.breakfast) {
+      breakfast = await extractMeal(chosenPlan.breakfast, breakfast);
+    }
+    if (chosenPlan.lunch) {
+      lunch = await extractMeal(chosenPlan.lunch, lunch);
+    }
+    if (chosenPlan.dinner) {
+      dinner = await extractMeal(chosenPlan.dinner, dinner);
+    }
+    if (chosenPlan.snack) {
+      snack = await extractMeal(chosenPlan.snack, snack);
+    }
+    setChosenMeals({ breakfast, lunch, dinner, snack });
   };
 
   useEffect(() => {
-    let breakfast = [];
-    let lunch = [];
-    let dinner = [];
-    let snack = [];
-
-    if (chosenPlan.Breakfast) {
-      extractMeal(chosenPlan.Breakfast, breakfast);
-    }
-    if (chosenPlan.Lunch) {
-      extractMeal(chosenPlan.Lunch, lunch);
-    }
-    if (chosenPlan.Dinner) {
-      extractMeal(chosenPlan.Dinner, dinner);
-    }
-    if (chosenPlan.Snack) {
-      extractMeal(chosenPlan.Snack, snack);
-    }
-    setChosenMeals({ breakfast, lunch, dinner, snack });
+    initChosenPlan();
   }, [chosenPlan]);
 
-  useEffect(() => {
+  const initTodayPlan = async () => {
     let breakfast = [];
     let lunch = [];
     let dinner = [];
     let snack = [];
-
-    if (todayPlan.Breakfast) {
-      extractMeal(todayPlan.Breakfast, breakfast);
+    if (todayPlan.breakfast) {
+      breakfast = await extractMeal(todayPlan.breakfast, breakfast);
     }
-    if (todayPlan.Lunch) {
-      extractMeal(todayPlan.Lunch, lunch);
+    if (todayPlan.lunch) {
+      lunch = await extractMeal(todayPlan.lunch, lunch);
     }
-    if (todayPlan.Dinner) {
-      extractMeal(todayPlan.Dinner, dinner);
+    if (todayPlan.dinner) {
+      dinner = await extractMeal(todayPlan.dinner, dinner);
     }
-    if (todayPlan.Snack) {
-      extractMeal(todayPlan.Snack, snack);
+    if (todayPlan.snack) {
+      snack = await extractMeal(todayPlan.snack, snack);
     }
     setTodayMeals({ breakfast, lunch, dinner, snack });
+  };
+
+  useEffect(() => {
+    initTodayPlan();
   }, [todayPlan]);
 
   return (
@@ -84,21 +95,25 @@ const Featured = () => {
         <p className="text-3xl">Make your Day</p>
         <p className="text-grey">{dayjs().format('dddd, D MMMM YYYY')}</p>
         <div className="flex flex-col m-4">
-          {Object.entries(todayMeals).map(([id, meal]) => (
-            <Meal
-              key={id}
-              title={id.charAt(0).toUpperCase() + id.substring(1)}
-              canAdd={true}
-              meals={todayMeals}
-              updateMeal={setTodayMeals}
-            />
-          ))}
+          {Object.entries(todayMeals).map((id, meal) => {
+            return (
+              <Meal
+                key={id}
+                title={id[0].charAt(0).toUpperCase() + id[0].slice(1)}
+                canAdd={true}
+                meals={todayMeals}
+                meal={todayPlan}
+                updateMeal={setTodayPlan}
+                canSelect={false}
+              />
+            );
+          })}
         </div>
         <div className="flex items-center justify-center">
           <Progress
             type="circle"
-            percent={((meals[0].calories * 4) / 1500) * 100}
-            format={() => `${meals[0].calories * 4} cal`}
+            percent={((150 * 4) / 1500) * 100}
+            format={() => `${150 * 4} cal`}
           />
         </div>
       </div>
@@ -117,14 +132,15 @@ const Featured = () => {
               title={id.charAt(0).toUpperCase() + id.substring(1)}
               canAdd={false}
               meals={meal}
+              canSelect={false}
             />
           ))}
         </div>
         <div className="flex items-center justify-center mt-8">
           <Progress
             type="circle"
-            percent={((meals[0].calories * 4) / 1500) * 100}
-            format={() => `${meals[0].calories * 4} cal`}
+            percent={((150 * 4) / 1500) * 100}
+            format={() => `${150 * 4} cal`}
           />
         </div>
       </div>

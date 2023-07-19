@@ -16,13 +16,17 @@ const Meal = ({ title, canAdd, meals, updateMeal, canSelect, meal }) => {
   }, [meals]);
 
   return (
-    <div className="flex flex-col self-start">
+    <div className="flex flex-col self-start w-full">
       <p>{title}</p>
       {mealPlan.map((m, index) => {
         return <Recipe key={index} meal={m} />;
       })}
       {canAdd && <Modal type={title} meal={meal} updateMeal={updateMeal} />}
-      {canSelect && <Button type="dashed">Select</Button>}
+      {canSelect && (
+        <Button type="dashed" className="w-full">
+          Select
+        </Button>
+      )}
     </div>
   );
 };

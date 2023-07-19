@@ -129,7 +129,7 @@ const Featured = () => {
           }}
           className="ml-8"
         />
-        <div className="mt-8 flex items-center justify-evenly w-full">
+        <div className="mt-8 flex items-center justify-evenly w-full mx-8">
           {Object.entries(chosenMeals).map((id, meal) => {
             return (
               <Meal

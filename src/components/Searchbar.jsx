@@ -2,7 +2,7 @@ import { Button, Input, Select, Space } from 'antd';
 import { Option } from 'antd/es/mentions';
 import React, { useState } from 'react';
 
-const SearchBar = ({}) => {
+const SearchBar = ({ submitFn }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [type, setType] = useState('Recipe');
 
@@ -20,7 +20,11 @@ const SearchBar = ({}) => {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
-      <Button type="primary" className="text-black">
+      <Button
+        type="primary"
+        className="text-black"
+        onClick={() => submitFn(searchTerm)}
+      >
         Search
       </Button>
     </Space.Compact>
